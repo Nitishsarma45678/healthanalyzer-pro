@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthScope - Advanced Health Report Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div id="flash-messages">
+                {% for category, message in messages %}
+                    <div class="toast toast-{{ category }}" role="alert">
+                        <div class="toast-content">
+                            <i class="fas fa-{{ 'check-circle' if category == 'success' else 'exclamation-triangle' }}"></i>
+                            <span>{{ message }}</span>
+                        </div>
+                        <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-heartbeat"></i>
+                    <h1>HealthScope</h1>
+                </div>
+                <div class="header-subtitle">
+                    Advanced Health Report Analyzer
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <div class="hero-content">
+                    <h2>Your Health, Analyzed Intelligently</h2>
+                    <p>Get personalized health insights based on your medical parameters with our advanced analysis system.</p>
+                </div>
+            </section>
+
+            <!-- Health Form -->
+            <section class="form-section">
+                <div class="form-card">
+                    <div class="form-header">
+                        <i class="fas fa-user-md"></i>
+                        <h3>Health Assessment Form</h3>
+                        <p>Please fill in your health parameters for analysis</p>
+                    </div>
+
+                    <form method="POST" id="healthForm" class="health-form">
+                        <!-- Progress Steps -->
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                            <div class="progress-steps">
+                                <div class="step active" data-step="1">
+                                    <i class="fas fa-user"></i>
+                                    <span>Personal Info</span>
+                                </div>
+                                <div class="step" data-step="2">
+                                    <i class="fas fa-notes-medical"></i>
+                                    <span>Medical History</span>
+                                </div>
+                                <div class="step" data-step="3">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Health Metrics</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 1: Personal Information -->
+                        <div class="form-step active" id="step1">
+                            <div class="step-header">
+                                <h4><i class="fas fa-user"></i> Personal Information</h4>
+                                <p>Let's start with your basic information</p>
+                            </div>
+
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="username">
+                                        <i class="fas fa-user"></i>
+                                        Full Name <span class="required">*</span>
+                                    </label>
+                                    <input type="text" id="username" name="username" required 
+                                           placeholder="Enter your full name">
+                                    <div class="input-feedback"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="age">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        Age <span class="required">*</span>
+                                    </label>
+                                    <input type="number" id="age" name="age" required min="1" max="120"
+                                           placeholder="Enter your age">
+                                    <div class="input-feedback"></div>
+                                </div>
+
+                                <div class="form-group full-width">
+                                    <label for="gender">
+                                        <i class="fas fa-venus-mars"></i>
+                                        Gender <span class="required">*</span>
+                                    </label>
+                                    <div class="gender-selection">
+                                        <input type="radio" id="male" name="gender" value="male" required>
+                                        <label for="male" class="gender-option">
+                                            <i class="fas fa-mars"></i>
+                                            <span>Male</span>
+                                        </label>
+                                        
+                                        <input type="radio" id="female" name="gender" value="female" required>
+                                        <label for="female" class="gender-option">
+                                            <i class="fas fa-venus"></i>
+                                            <span>Female</span>
+                                        </label>
+                                        
+                                        <input type="radio" id="other" name="gender" value="other" required>
+                                        <label for="other" class="gender-option">
+                                            <i class="fas fa-genderless"></i>
+                                            <span>Other</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Medical History -->
+                        <div class="form-step" id="step2">
+                            <div class="step-header">
+                                <h4><i class="fas fa-notes-medical"></i> Medical History</h4>
+                                <p>Select any existing medical conditions (optional)</p>
+                            </div>
+
+                            <div class="medical-conditions">
+                                <div class="condition-card">
+                                    <input type="checkbox" id="diabetes" name="medical_conditions" value="diabetes">
+                                    <label for="diabetes" class="condition-label">
+                                        <div class="condition-icon">
+                                            <i class="fas fa-syringe"></i>
+                                        </div>
+                                        <div class="condition-info">
+                                            <h5>Diabetes</h5>
+                                            <p>Type 1 or Type 2 diabetes</p>
+                                        </div>
+                                        <div class="checkmark">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                    </label>
+                                </div>
+
+                                <div class="condition-card">
+                                    <input type="checkbox" id="hypertension" name="medical_conditions" value="hypertension">
+                                    <label for="hypertension" class="condition-label">
+                                        <div class="condition-icon">
+                                            <i class="fas fa-heart-pulse"></i>
+                                        </div>
+                                        <div class="condition-info">
+                                            <h5>High Blood Pressure</h5>
+                                            <p>Hypertension or elevated BP</p>
+                                        </div>
+                                        <div class="checkmark">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                    </label>
+                                </div>
+
+                                <div class="condition-card">
+                                    <input type="checkbox" id="kidney" name="medical_conditions" value="kidney_disease">
+                                    <label for="kidney" class="condition-label">
+                                        <div class="condition-icon">
+                                            <i class="fas fa-kidneys"></i>
+                                        </div>
+                                        <div class="condition-info">
+                                            <h5>Kidney Disease</h5>
+                                            <p>Chronic kidney conditions</p>
+                                        </div>
+                                        <div class="checkmark">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                    </label>
+                                </div>
+
+                                <div class="condition-card">
+                                    <input type="checkbox" id="heart" name="medical_conditions" value="heart_disease">
+                                    <label for="heart" class="condition-label">
+                                        <div class="condition-icon">
+                                            <i class="fas fa-heart"></i>
+                                        </div>
+                                        <div class="condition-info">
+                                            <h5>Heart Disease</h5>
+                                            <p>Cardiovascular conditions</p>
+                                        </div>
+                                        <div class="checkmark">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Health Metrics -->
+                        <div class="form-step" id="step3">
+                            <div class="step-header">
+                                <h4><i class="fas fa-chart-line"></i> Health Metrics</h4>
+                                <p>Enter your current health measurements</p>
+                            </div>
+
+                            <div class="metrics-grid">
+                                <div class="metric-card">
+                                    <div class="metric-header">
+                                        <i class="fas fa-tint"></i>
+                                        <h5>Blood Sugar Level</h5>
+                                    </div>
+                                    <div class="metric-input">
+                                        <input type="number" id="sugar" name="sugar" required 
+                                               min="20" max="600" step="0.1"
+                                               placeholder="Enter value">
+                                        <span class="unit">mg/dL</span>
+                                    </div>
+                                    <div class="metric-info">
+                                        <small><i class="fas fa-info-circle"></i> Normal: 70-100 mg/dL (fasting)</small>
+                                    </div>
+                                    <div class="input-feedback"></div>
+                                </div>
+
+                                <div class="metric-card">
+                                    <div class="metric-header">
+                                        <i class="fas fa-flask"></i>
+                                        <h5>Urine pH Level</h5>
+                                    </div>
+                                    <div class="metric-input">
+                                        <input type="number" id="urine_ph" name="urine_ph" required 
+                                               min="4.0" max="10.0" step="0.1"
+                                               placeholder="Enter value">
+                                        <span class="unit">pH</span>
+                                    </div>
+                                    <div class="metric-info">
+                                        <small><i class="fas fa-info-circle"></i> Normal: 6.0-7.5 pH</small>
+                                    </div>
+                                    <div class="input-feedback"></div>
+                                </div>
+
+                                <div class="metric-card blood-pressure">
+                                    <div class="metric-header">
+                                        <i class="fas fa-heartbeat"></i>
+                                        <h5>Blood Pressure</h5>
+                                    </div>
+                                    <div class="bp-inputs">
+                                        <div class="bp-input">
+                                            <input type="number" id="bp_systolic" name="bp_systolic" required 
+                                                   min="60" max="250" placeholder="120">
+                                            <label>Systolic</label>
+                                        </div>
+                                        <span class="bp-separator">/</span>
+                                        <div class="bp-input">
+                                            <input type="number" id="bp_diastolic" name="bp_diastolic" required 
+                                                   min="40" max="150" placeholder="80">
+                                            <label>Diastolic</label>
+                                        </div>
+                                    </div>
+                                    <div class="metric-info">
+                                        <small><i class="fas fa-info-circle"></i> Normal: 120/80 mmHg</small>
+                                    </div>
+                                    <div class="input-feedback"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Form Navigation -->
+                        <div class="form-navigation">
+                            <button type="button" id="prevBtn" class="btn btn-secondary" style="display: none;">
+                                <i class="fas fa-arrow-left"></i> Previous
+                            </button>
+                            <button type="button" id="nextBtn" class="btn btn-primary">
+                                Next <i class="fas fa-arrow-right"></i>
+                            </button>
+                            <button type="submit" id="submitBtn" class="btn btn-success" style="display: none;">
+                                <i class="fas fa-chart-bar"></i> Analyze Health Report
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+<!-- Results Section - FIXED -->
+{% if reports %}
+<section class="results-section">
+    <div class="results-header">
+        <h3><i class="fas fa-chart-line"></i> Recent Health Reports</h3>
+        <div class="results-stats">
+            <div class="stat-card">
+                <div class="stat-number">{{ reports|length }}</div>
+                <div class="stat-label">Total Reports</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="reports-container">
+        {% for report in reports %}
+        <div class="report-card">
+            <div class="report-header">
+                <div class="patient-info">
+                    <h4 class="{{ report.gender.lower() if report.gender else 'other' }}">{{ report.username }}</h4>
+                    <p>{{ report.age }} years old • {{ report.gender|title }}</p>
+                </div>
+                <div class="report-status status-{{ report.result|lower }}">
+                    {{ report.result }}
+                </div>
+            </div>
+            
+            <div class="report-metrics">
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <div class="metric-icon sugar">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <span class="metric-value">
+                            {% if report.sugar_level %}
+                                {{ "%.1f"|format(report.sugar_level) }}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </span>
+                        <div class="metric-unit">mg/dL</div>
+                        <div class="metric-label">Blood Sugar</div>
+                    </div>
+                    
+                    <div class="metric-item">
+                        <div class="metric-icon ph">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <span class="metric-value">
+                            {% if report.urine_ph %}
+                                {{ "%.1f"|format(report.urine_ph) }}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </span>
+                        <div class="metric-unit">pH</div>
+                        <div class="metric-label">Urine pH</div>
+                    </div>
+                    
+                    <div class="metric-item">
+                        <div class="metric-icon bp">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <span class="metric-value">{{ report.blood_pressure }}</span>
+                        <div class="metric-unit">mmHg</div>
+                        <div class="metric-label">Blood Pressure</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="report-details">
+                <div class="risk-info">
+                    <div class="risk-score-display">
+                        <div class="risk-score-circle risk-{{ 'low' if report.risk_score < 3 else 'moderate' if report.risk_score < 6 else 'high' if report.risk_score < 8 else 'critical' }}">
+                            {{ report.risk_score }}/10
+                        </div>
+                        <div class="risk-text">
+                            <h5>Risk Assessment</h5>
+                            <p>{{ 'Low Risk' if report.risk_score < 3 else 'Moderate Risk' if report.risk_score < 6 else 'High Risk' if report.risk_score < 8 else 'Critical Risk' }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="report-footer">
+                        <div class="report-date">
+                            <i class="fas fa-calendar"></i>
+                            {{ report.created_at[:10] if report.created_at else 'N/A' }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 HealthScope. Advanced Health Analysis Platform.</p>
+        </div>
+    </footer>
+
+    <script src="/static/App.js"></script>
+</body>
+</html>

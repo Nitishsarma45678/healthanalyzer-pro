@@ -1,0 +1,22 @@
+# Python junk files
+__pycache__/
+*.pyc
+
+# Virtual environment (don't upload this!)
+venv/
+env/
+
+# Database (may have patient data)
+health.db
+*.db
+
+# Code editor files
+.vscode/
+.idea/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Environment files (passwords, secrets)
+.env
