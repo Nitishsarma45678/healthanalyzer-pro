@@ -16,26 +16,21 @@ A comprehensive health monitoring application that analyzes vital parameters and
 ### 🔬 **Advanced Health Analysis**
 - **Real-time Risk Assessment** - Instant health status evaluation
 - **Personalized Thresholds** - Age and gender-adjusted normal ranges
-- **10-Point Risk Scoring** - Clear, quantified health risk levels
-- **Medical Condition Integration** - Factors in existing health conditions
 
 ### 📊 **Comprehensive Monitoring**
 - **Blood Sugar Analysis** - Diabetes risk assessment with clinical thresholds
 - **Blood Pressure Evaluation** - Hypertension detection and staging
 - **Urine pH Testing** - Kidney function and metabolic health indicators
-- **Multi-Parameter Correlation** - Considers interactions between health metrics
 
 ### 💻 **Modern User Experience**
 - **Responsive Design** - Works seamlessly on desktop, tablet, and mobile
 - **Real-time Validation** - Instant feedback as you type
-- **Progress Tracking** - Visual completion indicators
-- **Interactive Forms** - Modern UI with smooth animations
 
 ### 📈 **Data Management**
 - **Historical Records** - Complete health assessment history
 - **Patient Profiles** - Comprehensive demographic and medical information
 - **Detailed Reports** - In-depth analysis with actionable recommendations
-- **Export Capability** - Easy data access and sharing
+
 
 ---
 
