@@ -213,7 +213,7 @@ We welcome contributions! Here's how to get involved:
 
 - **GitHub Issues**: [Report bugs or request features](https://github.com/Nitishsarma45678/healthanalyzer-pro/issues)
 - **Discussions**: [Join community discussions](https://github.com/Nitishsarma45678/healthanalyzer-pro/discussions)
-- **Email**: [Your email for direct contact]
+- **Email**: nitishsarma8@gmail.com
 
 ---
 
