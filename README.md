@@ -129,23 +129,6 @@ python App.py
 
 ---
 
-## 📁 Project Structure
-
-healthanalyzer-pro/
-├── 📄 app.py # Main Flask application
-├── 📄 requirements.txt # Python dependencies
-├── 📄 README.md # Project documentation
-├── 📄 LICENSE # MIT license
-├── 📄 .gitignore # Git ignore rules
-├── 📁 static/
-│ ├── 📄 style.css # Modern CSS styling
-│ └── 📄 script.js # JavaScript functionality
-├── 📁 templates/
-│ └── 📄 index.html # Main HTML template
-└── 📄 health.db # SQLite database (auto-created)
-
-
----
 
 ## 🔬 Health Analysis Algorithm
 
