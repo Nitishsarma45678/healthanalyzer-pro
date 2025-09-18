@@ -105,7 +105,7 @@ python App.py
 |------------|-------------|-------------|--------------------|
 | 🟢 **Good** | 0-1 | All parameters within normal limits | Continue healthy lifestyle |
 | 🟡 **Fair** | 2-3 | Minor health concerns detected | Lifestyle modifications recommended |
-| 🟠**Moderate** | 4-6 | Significant health issues present | Schedule doctor appointment (1-2 weeks) |
+|🟠 **Moderate** | 4-6 | Significant health issues present | Schedule doctor appointment (1-2 weeks) |
 | 🔴 **Critical** | 7-10 | Serious health risks identified | **URGENT: Seek immediate medical attention** |
 
 ---
